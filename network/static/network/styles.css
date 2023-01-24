@@ -1,0 +1,28 @@
+.post_body{
+    margin:10px;
+    padding: 5px;
+    border: 2px black solid;
+    
+
+}
+
+.timeclass {
+
+    background-color: lightcyan;
+    font-weight: normal;
+}
+
+.userclass{
+    background-color: rgba(20, 210, 181, 0.498);
+
+}
+
+.textclass{
+    background-color: lightblue;
+    font-weight: bold;
+}
+
+.idclass{
+    background-color: rgba(20, 210, 182, 0.774);
+
+}
