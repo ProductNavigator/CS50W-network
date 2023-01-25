@@ -2,6 +2,17 @@
 {% load static %} 
 
 {% block body %}
+<div class="addpost">
+<form action="{% url 'index' %}" method="post">
+        
+    {{create}}
+    {% csrf_token %}
+    <br>
+    <input type="submit" value="Create Post" class="btn btn-primary">
+
+</form>
+</div>
+
 <script src="{% static 'network/index.js' %}" type="text/babel"></script>
 <div id="root"></div>
 {% endblock %}

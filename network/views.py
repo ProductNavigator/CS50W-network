@@ -6,12 +6,33 @@ from django.urls import reverse
 from .models import User, Post
 from rest_framework import viewsets
 from .serializer import PostSerializer
-
-
+from datetime import datetime
+import logging
+from django import forms
 
 def index(request):
-    return render(request, "network/index.html")
-
+    if request.method == "POST":
+        user_id = request.user.id
+        user = User.objects.get(pk=user_id)    
+        form = Create(request.POST)
+        if form.is_valid():
+            text = form.cleaned_data["text"]
+            time = datetime.now()
+            #create new Post
+            p = Post(user = user, text = text, time = time)
+            logging.debug(p)
+            p.save()
+            return render(request, "network/index.html", {
+                "create": Create()
+            })
+        else:
+            return render(request, "network/index.html", {
+                "create": Create()
+            })
+    else:
+        return render(request, "network/index.html", {
+                "create": Create()
+            })
 
 def login_view(request):
     if request.method == "POST":
@@ -67,3 +88,7 @@ def register(request):
 class PostViewSet (viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+
+class Create(forms.Form):
+    text = forms.CharField(max_length=1000000, label="New Post", widget=forms.Textarea)

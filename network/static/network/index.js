@@ -24,59 +24,59 @@ function Post(props) {
 
     )
 }
+
+///create and pass crsf token
+//var csrftoken = django.middleware.csrf.get_token()
+
+//function CSRFToken(props) {
+    //return (
+    //<input type="hidden" name="csrfmiddlewaretoken" value={csrftoken} />
+    //);
+//};
+
+///////////////////////////////////////////////////////
+//creating Add post option
+//function AddPost (props) {
+    //const token = "{% csrf_token %}"
+    //return (
+    //<div className="addpost">
+        //<form action="" method ="post">  
+        //<textarea name ="text" className="form-control" rows="3"></textarea>
+        //<button type="submit" className="btn btn-primary">Add Post </button>
+        //<div>{token}</div>
+        //</form>
+    //</div>  
+    //)
+//}
 ///////////////////////////////////////////////////////
 //creating App for this view 
 
 function App(prop) {
+    //Create current list of posts
     const [PostArray, setPostArray] = React.useState([]);
 
+    //By fetching data from API
     React.useEffect(() => {
     fetch('/api/Post/')
         .then(response => response.json())
         .then(posts => {setPostArray(posts)})
     }, [])
 
+    //Consol log results of fetching 
     console.log(PostArray)
+
+    //Create a list of components with this fetched data iside variable Listofposts
     const Listofposts = PostArray.map(post => (
     <Post key={post.id} id={post.id} user={post.user} text={post.text} time={post.time}/>
     ))
 
+    //Render index page
     return (
     <div>
     {Listofposts}
     </div>
     )
 }
-        ////adding post
-        //function add_post() {
-            //setPostArray(PrevPostArray => {
-            
-            ////Take new post
-            //const user = form['user'].value;
-            //const text = form['text'].value;
-            //const date = Date.now()
-                    
-            ////Send post via API 
-            //fetch('/api/Post/', {
-            //method: 'POST',
-            //body: JSON.stringify({
-            //user: user,
-            //text: text,
-            //date: date,
-            //        })
-            //    })
-            //.then(response => response.json())
-            //.then(result => {
-            // Print result to console
-            //console.log(result);
-            //                 }
-            //    )
-            
-            //return [...prevThingsArray, result]
-            //                })}
-
-///////////////////////////////////////////////////////
-//setting up rendering for this view (should be seperate js file)
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(<App/>)
