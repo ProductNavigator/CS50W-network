@@ -22,13 +22,9 @@ def index(request):
             p = Post(user = user, text = text, time = time)
             logging.debug(p)
             p.save()
-            return render(request, "network/index.html", {
-                "create": Create()
-            })
+            return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "network/index.html", {
-                "create": Create()
-            })
+            return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/index.html", {
                 "create": Create()
@@ -91,4 +87,4 @@ class PostViewSet (viewsets.ModelViewSet):
 
 
 class Create(forms.Form):
-    text = forms.CharField(max_length=1000000, label="New Post", widget=forms.Textarea)
+    text = forms.CharField(max_length=1000000, label="New Post", widget=forms.Textarea(attrs={"class":"input", "rows":"2"}))

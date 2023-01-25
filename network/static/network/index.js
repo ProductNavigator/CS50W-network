@@ -20,6 +20,10 @@ function Post(props) {
         Time: {props.time}
         </div>     
 
+        <div className="likesclass">
+        likes: {props.likes}
+        </div>  
+
     </div>
 
     )
@@ -59,15 +63,22 @@ function App(prop) {
     React.useEffect(() => {
     fetch('/api/Post/')
         .then(response => response.json())
+        .then(posts => posts.sort((a, b) => a - b).reverse())
         .then(posts => {setPostArray(posts)})
     }, [])
+
+    const sortDescending = () => {
+        const sortDescPosts = [...PostArray]
+        sortDescPosts.sort((a, b) => a - b).reverse()
+        setPostArray( sortDescPosts )
+    }
 
     //Consol log results of fetching 
     console.log(PostArray)
 
     //Create a list of components with this fetched data iside variable Listofposts
     const Listofposts = PostArray.map(post => (
-    <Post key={post.id} id={post.id} user={post.user} text={post.text} time={post.time}/>
+    <Post key={post.id} id={post.id} user={post.user} text={post.text} time={post.time} likes={post.likes}/>
     ))
 
     //Render index page

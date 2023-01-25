@@ -5,4 +5,4 @@ class PostSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
     class Meta:
         model = Post 
-        fields=['id', 'text', 'time', 'user']
+        fields=['id', 'text', 'time', 'user', 'likes']

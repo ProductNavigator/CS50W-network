@@ -32,3 +32,24 @@
     background-color: rgba(20, 210, 182, 0.774);
 
 }
+
+.likesclass{
+    background-color: lightseagreen;
+}
+
+.input{
+    background-color: lightblue;
+    width: 1200px;
+    
+
+}
+
+.addbutton{
+    display: flex; 
+    justify-content: flex-end
+}
+
+label {
+vertical-align: top;
+}
+

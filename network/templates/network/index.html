@@ -4,11 +4,13 @@
 {% block body %}
 <div class="addpost">
 <form action="{% url 'index' %}" method="post">
-        
     {{create}}
     {% csrf_token %}
     <br>
+    
+    <div class="addbutton">
     <input type="submit" value="Create Post" class="btn btn-primary">
+    </div>
 
 </form>
 </div>
