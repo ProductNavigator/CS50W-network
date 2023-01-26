@@ -1,4 +1,4 @@
-from .models import Post
+from .models import Post, User
 from rest_framework import serializers
 
 class PostSerializer(serializers.ModelSerializer):

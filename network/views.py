@@ -3,12 +3,13 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .models import User, Post
+from .models import User, Post, Follows
 from rest_framework import viewsets
 from .serializer import PostSerializer
 from datetime import datetime
 import logging
 from django import forms
+
 
 def index(request):
     if request.method == "POST":
@@ -80,6 +81,26 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+
+def profile (request):
+    user = User.objects.get(pk=request.user.id)
+
+    #getting followers of user 
+    followers = (user.followers.all()).count
+
+    #getting people user follows
+    following = (user.following.all()).count
+
+    return render(request, "network/profile.html", {
+        "followers": followers,
+        "following": following,
+        })
+    
+
+def user(request):
+    user = request.user.username
+    return HttpResponse(user, content_type='text/plain')
 
 class PostViewSet (viewsets.ModelViewSet):
     queryset = Post.objects.all()

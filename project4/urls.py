@@ -19,6 +19,7 @@ from django.urls import include, path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("network.urls")),
+    path("user/", include("network.urls")),
 ]
 
 ##I think I dont need this path::: path("api/", include("network.urls")),

@@ -4,6 +4,8 @@ from rest_framework import routers
 from . import views
 from .views import PostViewSet
 
+app_name = "network"
+
 router = routers.DefaultRouter()
 router.register(r'Post', PostViewSet)
 
@@ -13,6 +15,8 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("api/", include(router.urls)),
+    path("profile", views.profile, name="profile"),
+    path("userid", views.user),
 ]
 
 ##Shoudl I add below line to urlpatterns???

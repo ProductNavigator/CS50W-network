@@ -10,3 +10,7 @@ class Post(models.Model):
     time = models.DateTimeField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posted_post")
     likes = models.IntegerField(default=0)
+
+class Follows(models.Model):
+    person = models.ForeignKey(User, on_delete=models.CASCADE,related_name="following")
+    follows = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followers")

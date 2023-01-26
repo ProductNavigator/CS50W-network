@@ -3,7 +3,7 @@
 
 {% block body %}
 <div class="addpost">
-<form action="{% url 'index' %}" method="post">
+<form action="{% url 'network:index' %}" method="post">
     {{create}}
     {% csrf_token %}
     <br>
