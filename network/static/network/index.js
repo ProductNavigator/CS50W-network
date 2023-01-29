@@ -9,7 +9,10 @@ function Post(props) {
         </div>
 
         <div className="userclass">
-        Written by user: {props.user}
+        Written by user: 
+        <a href={`./profile/${props.user}`}>
+        {props.user}
+        </a>
         </div>
         
         <div className="textclass">

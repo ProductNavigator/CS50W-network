@@ -2,12 +2,13 @@
 from django.urls import path, include
 from rest_framework import routers
 from . import views
-from .views import PostViewSet
+from .views import PostViewSet, FollowsViewSet
 
 app_name = "network"
 
 router = routers.DefaultRouter()
 router.register(r'Post', PostViewSet)
+router.register(r'Follows', FollowsViewSet)
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -15,8 +16,9 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("api/", include(router.urls)),
-    path("profile", views.profile, name="profile"),
+    path("profile/<str:user_name>", views.profile, name="profile"),
     path("userid", views.user),
+    path("following", views.following, name="following"),
 ]
 
 ##Shoudl I add below line to urlpatterns???
