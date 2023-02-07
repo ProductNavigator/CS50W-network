@@ -1,0 +1,8 @@
+{% extends "network/layout.html" %}
+{% load static %} 
+
+{% block body %}
+<div id="user_name" hidden>{{user1}}</div>
+<script src="{% static 'network/following2.js' %}" type="text/babel"></script>
+<div id="root"></div>
+{% endblock %}

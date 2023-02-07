@@ -1,0 +1,18 @@
+{% extends "network/layout.html" %}
+{% load static %} 
+
+{% block body %}
+<div class="post_body">Number of followers: {{followers}}</div>
+<div class="post_body">Following: {{following}} users</div>
+<div hidden id="user_name">{{user_name}}</div>
+<div>{{infoaboutaction}}</div>
+{% if user.is_authenticated %}
+<div style="margin-left: 10px">
+<form action="{% url 'network:profile' profile.username %}" method="post"><input name="buttoncheck" value="follow" type="submit" {{tofollow}} class="btn btn-primary">{% csrf_token %}</form>
+<form action="{% url 'network:profile' profile.username %}" method="post"><input name="buttoncheck" value="unfollow" type="submit" {{tounfollow}} class="btn btn-primary">{% csrf_token %}</form>
+{% endif %}
+</div>
+
+<script src="{% static 'network/profile2.js' %}" type="text/babel"></script>
+<div id="root"></div>
+{% endblock %}
