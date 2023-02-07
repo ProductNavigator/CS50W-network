@@ -20,5 +20,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("network.urls")),
     path("profile/", include("network.urls")),
+    path("api/", include("network.urls")),
+    path("likes/", include("network.urls")),
+    path("edit/", include("network.urls")),
 ]
-##I think I dont need this path::: path("api/", include("network.urls")),
+##I think I dont need this path::: 
+#
+#path("api/", include("network.urls")),

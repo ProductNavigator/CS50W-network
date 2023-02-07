@@ -10,6 +10,13 @@ from datetime import datetime
 import logging
 from django import forms
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
+from rest_framework.decorators import api_view
+from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import logging
+import json 
 
 
 def index(request):
@@ -28,8 +35,14 @@ def index(request):
         else:
             return HttpResponseRedirect(reverse("network:index"))
     else:
+        posts = Post.objects.all()
+        paginator = Paginator(posts, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         return render(request, "network/index.html", {
-                "create": Create()
+                "create": Create(),
+                "posts": posts,
+                'page_obj': page_obj,
             })
 
 def login_view(request):
@@ -83,7 +96,14 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
+def following (request):
+    user_which_acts = User.objects.get(pk=request.user.id)
+    user1 = user_which_acts.username
+    return render(request, "network/following.html", {
+        "user1": user1,
+        })
 
+@csrf_protect
 def profile (request, user_name):
     user = User.objects.get(username=user_name)
     user_which_acts = User.objects.get(pk=request.user.id)
@@ -134,15 +154,36 @@ def profile (request, user_name):
             "user_name":user_name
             })
 
+@csrf_exempt
+def likes(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    data = json.loads(request.body)
+    print(data)
+    if data == True:
+        post.likes = post.likes + 1
+    else:
+        post.likes = post.likes - 1
+    post.save()
+    return HttpResponse('It was updated', content_type='text/plain')
 
-@login_required(login_url='network/index')
-def following (request):
-    user_which_acts = User.objects.get(pk=request.user.id)
-    user = user_which_acts.username
-    return render(request, "network/following.html", {
-        "user": user
-        })
+@csrf_exempt
+def editpost(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    databeta = str(request.body)
+    data = databeta[2:-1]
+    print(data)
+    post.text = data
+    post.save()
+    return HttpResponse('It was updated', content_type='text/plain')
 
+
+@api_view(['GET'])
+def current_user(request):
+    user = request.user
+    return JsonResponse({
+      'username' : user.username,
+      'id' : user.id,
+    })
 
 def user(request):
     user = request.user.username
@@ -151,10 +192,11 @@ def user(request):
 class PostViewSet (viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-
+    
 class FollowsViewSet (viewsets.ModelViewSet):
     queryset = Follows.objects.all()
     serializer_class = FollowSerializer
 
 class Create(forms.Form):
     text = forms.CharField(max_length=1000000, label="New Post", widget=forms.Textarea(attrs={"class":"input", "rows":"2"}))
+

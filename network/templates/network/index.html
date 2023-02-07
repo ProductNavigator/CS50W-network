@@ -13,8 +13,94 @@
     </div>
 
 </form>
+
+</div>
+<!--
+{% for post in page_obj %}
+<div class ="post_body">
+    <div class="idclass">
+    This is post number: {{post.id}}
+    </div>
+
+    <div class="userclass">
+    Written by user: 
+        <a href="{% url 'network:profile' post.user %}"> {{post.user}}
+        </a>
+    </div>
+        
+    <div class="textclass">
+        {{post.text}}
+    </div>
+
+    <div class="timeclass">
+        Time: {{post.time}}
+    </div> 
+        
+    <div class="likesclass">
+    likes: {{post.likes}}
+    </div>
+    <br>
+
+        <button id="likebutton" onclick="addlike('{{ post }}')" >like</button>  
 </div>
 
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<script>
+    var CSRF_TOKEN = '{{ csrf_token }}';
+
+    function addlike(post, csrftoken) {
+    console.log(post)
+
+    const likes = post.likes + 1
+
+    fetch(`/api/Post/${post.id}/`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': CSRF_TOKEN},
+        body: JSON.stringify({
+                "likes": likes
+            })
+        })
+        .then(res => {
+            console.log(res.status);
+            console.log(res.headers);
+            return(res)
+        })
+        .then( 
+            (result) => {
+                console.log(result);
+            },
+            (error) => {
+                console.log(error);
+            },
+        )
+
+        button = document.getElementById('likebutton')
+        button.disabled = true;
+
+    }
+</script>
+-->
+
 <script src="{% static 'network/index.js' %}" type="text/babel"></script>
-<div id="root"></div>
+<div id="root"></div> 
 {% endblock %}

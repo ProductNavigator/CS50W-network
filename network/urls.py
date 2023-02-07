@@ -19,7 +19,10 @@ urlpatterns = [
     path("profile/<str:user_name>", views.profile, name="profile"),
     path("userid", views.user),
     path("following", views.following, name="following"),
+    path("api/auth", include('rest_framework.urls', namespace='rest_framework')),
+    path("<int:post_id>", views.likes, name="likes"),
+    path("current_user", views.current_user, name="current_user"),
+    path("editpost/<int:post_id>", views.editpost, name="editpost"),
 ]
 
 ##Shoudl I add below line to urlpatterns???
-#path("api/auth", include('rest_framework.urls', namespace='rest_framework'))

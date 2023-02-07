@@ -1,5 +1,6 @@
 from .models import Post, User, Follows
 from rest_framework import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 class PostSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
