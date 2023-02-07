@@ -44,6 +44,13 @@
 
 }
 
+.inputedit{
+    background-color: whitesmoke;
+    width: 1200px;
+    
+
+}
+
 .addbutton{
     display: flex; 
     justify-content: flex-end

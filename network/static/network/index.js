@@ -84,7 +84,11 @@ function App(prop) {
             //check passed data to the component
             console.log(PostEdited)
 
+
+
             function handleChange(event) {
+
+            
                 setPostEdited(prevPost => {
                         return {
                         ...prevPost,
@@ -92,6 +96,17 @@ function App(prop) {
                         
                     })
               }
+
+
+            //handle enter click as submit 
+            function handleKeyDown(event){
+                if (event.key === 'Enter'){
+                    return handleSubmit(event)
+                    
+                }
+
+            }
+
 
             //posting change
             function handleSubmit(event) {
@@ -126,9 +141,10 @@ function App(prop) {
             //visiable form component
             return(
             <form onSubmit={handleSubmit}>
-                <textarea name="text" value={PostEdited.text} onChange={handleChange} />
+                <textarea className="inputedit" name="text" value={PostEdited.text} onChange={handleChange} onKeyDown={handleKeyDown}/>
                 <br></br>
-                <button>Submit Change</button>
+                <button className="btn btn-primary">Save</button>
+                <p></p>
             </form>
             ) 
         }
